@@ -5,12 +5,6 @@
 
 ## Algorithm
 
-Got it 👍 — here’s a **clean summary of the DDPM training algorithm** (forgetting the derivations, just the steps you’d implement).
-
----
-
-## DDPM Training Algorithm
-
 1. **Sample a data point**
 
    * Draw $x_0 \sim q_\text{data}(x_0)$ from the dataset.
