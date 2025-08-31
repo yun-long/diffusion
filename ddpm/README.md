@@ -18,9 +18,9 @@
    * Sample noise $\varepsilon \sim \mathcal{N}(0, I)$.
    * Compute
 
-     ```math
-     x_t = \sqrt{\bar\alpha_t}\,x_0 + \sqrt{1-\bar\alpha_t}\,\varepsilon.
-     ```
+```math
+x_t = \sqrt{\bar\alpha_t}\,x_0 + \sqrt{1-\bar\alpha_t}\,\varepsilon.
+```
 
 4. **Predict the noise**
 
@@ -30,9 +30,9 @@
 
    * Minimize mean squared error between true noise and predicted noise:
 
-     ```math
-     \mathcal{L}(\theta) = \|\varepsilon - \varepsilon_\theta(x_t, t)\|^2.
-     ```
+```math
+\mathcal{L}(\theta) = \|\varepsilon - \varepsilon_\theta(x_t, t)\|^2.
+```
 
 6. **Update parameters**
 
