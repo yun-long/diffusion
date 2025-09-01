@@ -40,7 +40,6 @@ We consider a simple toy problem where the data comes from a 1D Gaussian Mixture
 
 ## 2D Example
 
-## 2D Example
 In this example, we are going to learn to generate images that looks like the MNIST dataset.
 
 ![image example](img/generated_unet_scorematching.png)
