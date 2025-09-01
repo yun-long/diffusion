@@ -1,11 +1,51 @@
 
+# Score-Based Generative Modeling through SDEs
+
+[Score-Based Generative Modeling through Stochastic Differential Equations (Song et al., 2021)](https://arxiv.org/abs/2011.13456) generalizes diffusion models to the continuous-time domain. Instead of a discrete forward noising chain (DDPM), it defines a stochastic differential equation (SDE) that gradually perturbs data into noise. By learning the **score function** (the gradient of the log-density) at each noise level, we can simulate the reverse-time SDE to generate new samples. This framework unifies score matching, diffusion models, and stochastic processes.
+
+**TL;DR**
+
+Score-based generative modeling reframes learning as **estimating the score** of noisy data distributions across continuous noise scales.
+Training is done via **denoising score matching (DSM)**, and sampling corresponds to simulating the **reverse SDE** (stochastic) or the **probability-flow ODE** (deterministic).
+
+```math
+\text{Goal:}\quad \max_\theta \; \log p_\theta(x_0)
+```
+
+
+```math
+\text{Training objective:}\quad 
+\min_\theta\;
+\mathbb{E}_{t,x_0,x_t}
+\left[
+  \lambda(t)\,\big\|\, s_\theta(x_t,t) - \nabla_x \log q(x_t\mid x_0) \big\|^2
+\right]
+```
+
+
+## Training Algorithm
+
+* Sample data point $x_0 \sim q_\text{data}$
+* Sample random time $t \sim \mathcal U[0,1]$
+* Add Gaussian noise using the forward SDE: $x_t \sim q(x_t \mid x_0)$
+* Compute analytic conditional score: $-\tfrac{x_t-\mu_t(x_0)}{\sigma_t^2(t)}$
+* Train network $s_\theta(x_t, t)$ to match it with MSE
+
+
+## 1D Example
+
+We consider a simple toy problem where the data comes from a 1D Gaussian Mixture Model (GMM) with two modes, centered at -2 and +2. Each data point is just a single scalar sampled from one of the two Gaussians. The goal of the diffusion model is to learn this bimodal distribution: starting from pure Gaussian noise, the model should gradually denoise and recover samples that follow the original two-peaked structure.
+
+![one-dimension example](img/denoising_process.gif)
+
+## 2D Example
+
+
 ## Setup & Goal
 
 ```math
-\text{Data: } x_0 \sim q_{\text{data}}(x).
-\quad
-\text{Define noisy marginals } q_t(x) \text{ for } t\in[0,1].
-\quad
+\text{Data: } x_0 \sim q_{\text{data}}(x). \\
+\text{Define noisy marginals } q_t(x) \text{ for } t\in[0,1]. \\
 \textbf{Goal: learn the score } s_\theta(x,t)\approx \nabla_x \log q_t(x).
 ```
 
