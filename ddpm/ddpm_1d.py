@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
+import numpy as np
+import os
 
 # ---------------------------
 # 1. Toy dataset: mixture of Gaussians
@@ -72,13 +74,19 @@ for step in range(num_steps):
 
     if step % 2000 == 0:
         print(f"Step {step}, Loss: {loss.item():.4f}")
+        
 
-# ---------------------------
-# 5. Sampling (reverse process)
-# ---------------------------
+os.makedirs("denoising_steps", exist_ok=True)
+ref_samples = sample_data(200_000).numpy()  # big sample for a smooth curve
+bins = np.linspace(-6, 6, 200)              # consistent x-range and bins for all frames
+ref_hist, ref_bin_edges = np.histogram(ref_samples, bins=bins, density=True)
+ref_bin_centers = 0.5 * (ref_bin_edges[:-1] + ref_bin_edges[1:])
+
+
 @torch.no_grad()
-def sample(model, n_samples=5000):
+def sample_and_save_all(model, n_samples=5000):
     x_t = torch.randn(n_samples)  # start from pure noise
+
     for t in reversed(range(1, T+1)):
         alpha_t = alphas[t-1]
         alpha_bar_t = alphas_bar[t-1]
@@ -98,17 +106,19 @@ def sample(model, n_samples=5000):
             x_t = mean + sigma_t * z
         else:
             x_t = mean
+
+        # --- save histogram at this step ---
+        fig, ax = plt.subplots(figsize=(5, 4))
+        ax.hist(x_t.numpy(), bins=bins, density=True, alpha=0.6, label="Current $x_t$")
+        ax.plot(ref_bin_centers, ref_hist, linewidth=2.0, label="True distribution")
+        ax.set_title(f"Denoising step t={t}")
+        ax.set_xlabel("x")
+        ax.set_ylabel("Density")
+        ax.legend(loc="upper left")
+        fig.tight_layout()
+        fig.savefig(f"denoising_steps/step_{T - t:04d}.png")
+        plt.close(fig)
+
     return x_t
 
-# ---------------------------
-# 6. Visualize
-# ---------------------------
-samples = sample(model, 5000).numpy()
-true_data = sample_data(5000).numpy()
-
-plt.figure(figsize=(10,4))
-plt.hist(true_data, bins=50, density=True, alpha=0.6, label="True data")
-plt.hist(samples, bins=50, density=True, alpha=0.6, label="DDPM samples")
-plt.legend()
-plt.title("1D DDPM: Learned vs True Distribution")
-plt.show()
+sample_and_save_all(model)
