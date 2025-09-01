@@ -7,9 +7,6 @@
 
 DDPM reframes maximum likelihood training of generative models into a simple regression task. By adding noise step by step and learning to predict it back out, the model reduces a complex likelihood objective into a straightforward MSE loss on noise prediction.
 
-
-
-
 ```math
 \text{Goal:}\quad \max_\theta \; \log p_\theta(x_0)
 ```
@@ -33,6 +30,9 @@ We consider a simple toy problem where the data comes from a 1D Gaussian Mixture
 ![one-dimension example](img/denoising_process.gif)
 
 ## 2D Example
+In this example, we are going to learn to generate images that looks like the MNIST dataset.
+
+![image example](img/generated_unet.png)
 
 ## Derivation 
 
