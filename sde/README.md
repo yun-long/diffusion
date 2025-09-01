@@ -48,8 +48,10 @@ In this example, we are going to learn to generate images that looks like the MN
 ## Setup & Goal
 
 ```math
-\text{Data: } x_0 \sim q_{\text{data}}(x). \\
-\text{Define noisy marginals } q_t(x) \text{ for } t\in[0,1]. \\
+\text{Data: } x_0 \sim q_{\text{data}}(x). 
+
+\text{Define noisy marginals } q_t(x) \text{ for } t\in[0,1].
+
 \textbf{Goal: learn the score } s_\theta(x,t)\approx \nabla_x \log q_t(x).
 ```
 
