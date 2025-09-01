@@ -28,11 +28,6 @@ where
 
 This general formulation highlights the **common principle**: both methods convert maximum-likelihood learning into a supervised regression task, making the optimization stable and effective.
 
-### Fundamentals 
-
-Perfect 🚀 Here’s a structured **roadmap / tutorial outline** you can directly use in your README, blog, or lecture notes. It breaks the learning path into clear levels with progressively deeper concepts.
-
-
 --- 
 ### Foundations: Math & Intuition
 
@@ -102,3 +97,8 @@ Perfect 🚀 Here’s a structured **roadmap / tutorial outline** you can direct
 **Blog**
 
 - [An Introduction to Flow Matching](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html)
+
+
+### Acknowledegment 
+
+The note is written with the help from ChatGPT.
