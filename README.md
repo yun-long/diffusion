@@ -101,4 +101,4 @@ Perfect 🚀 Here’s a structured **roadmap / tutorial outline** you can direct
 
 **Blog**
 
-- [An Introduction to Flow Matching](https://mlg.eng.cam.ac.uk/2024/01/20/flow-matching.html)
+- [An Introduction to Flow Matching](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html)
